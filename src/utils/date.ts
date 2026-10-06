@@ -10,7 +10,8 @@ export function startOfDay(date: Date): Date {
 }
 
 
-export function daysUntil(deadlineIso: string, now: Date = new Date()): number {
+/** Phần C — số ngày còn lại tới hạn nộp (âm = đã qua; 0 = hôm nay; bỏ qua phần giờ) */
+export function calcDaysLeft(deadlineIso: string, now: Date = new Date()): number {
   const diff = startOfDay(new Date(deadlineIso)).getTime() - startOfDay(now).getTime();
   return Math.round(diff / MS_PER_DAY);
 }
@@ -44,7 +45,7 @@ export function daysFromToday(days: number): string {
   return toIsoDate(d);
 }
 
-/** Bài tập chưa hoàn thành AND đã qua hạn nộp */
+/** Phần C — bài tập chưa hoàn thành AND đã qua hạn nộp */
 export function isOverdue(assignment: Assignment, now: Date = new Date()): boolean {
-  return !assignment.completed && daysUntil(assignment.deadline, now) < 0;
+  return !assignment.completed && calcDaysLeft(assignment.deadline, now) < 0;
 }

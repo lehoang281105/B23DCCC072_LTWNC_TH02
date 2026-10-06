@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
-import { daysUntil, isOverdue } from '../../utils/date';
+import { calcDaysLeft, isOverdue } from '../../utils/date';
 import type { AssignmentFilter } from '../../types/assignment';
 
 export interface FilterCounts {
@@ -10,7 +10,7 @@ export interface FilterCounts {
   completed: number;
 }
 
-const selectItems = (state: RootState) => state.assignments.items;
+export const selectItems = (state: RootState) => state.assignments.items;
 
 export const selectStatus = (state: RootState) => state.assignments.status;
 export const selectError = (state: RootState) => state.assignments.error;
@@ -45,7 +45,7 @@ export const selectVisibleAssignments = createSelector([selectFilteredAssignment
     if (a.completed !== b.completed) {
       return a.completed ? 1 : -1;
     }
-    return daysUntil(a.deadline) - daysUntil(b.deadline);
+    return calcDaysLeft(a.deadline) - calcDaysLeft(b.deadline);
   })
 );
 

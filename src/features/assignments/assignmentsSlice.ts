@@ -67,6 +67,10 @@ const assignmentsSlice = createSlice({
     setFilter(state, action: PayloadAction<AssignmentFilter>) {
       state.filter = action.payload;
     },
+    /** Nâng cấp Phần B — stress test: thêm hàng loạt bài tập mẫu một lần duy nhất */
+    addManyAssignments(state, action: PayloadAction<Assignment[]>) {
+      state.items = state.items.concat(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,6 +89,6 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const { addAssignment, toggleAssignment, removeAssignment, setFilter } =
+export const { addAssignment, toggleAssignment, removeAssignment, setFilter, addManyAssignments } =
   assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

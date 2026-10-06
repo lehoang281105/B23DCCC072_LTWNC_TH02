@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useNow } from './useNow';
-import { daysUntil } from '../utils/date';
+import { calcDaysLeft } from '../utils/date';
 
 export type DeadlineInfo =
   | { kind: 'remaining'; days: number; label: string }
@@ -11,7 +11,7 @@ export function useDeadlineInfo(deadlineIso: string): DeadlineInfo {
   const now = useNow();
 
   return useMemo(() => {
-    const days = daysUntil(deadlineIso, now);
+    const days = calcDaysLeft(deadlineIso, now);
     if (days > 0) {
       return { kind: 'remaining', days, label: `Còn ${days} ngày` };
     }
